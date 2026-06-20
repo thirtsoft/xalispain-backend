@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: xalispain-backend
+
+  datasource:
+    # En production, on utilise PostgreSQL pour la robustesse
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/xalispain}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASS:password}
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      pool-name: XalisPain-Prod-Pool
+      # Pour un SaaS, on augmente un peu le pool pour gérer les requêtes concurrentes
+      maximum-pool-size: 20
+      minimum-idle: 10
+      # Temps d'attente max pour une connexion (important pour l'UX)
+      connection-timeout: 30000
+      # Durée de vie d'une connexion pour éviter les "stale connections"
+      max-lifetime: 1800000 # 30 min
+      # Optimisation pour PostgreSQL
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+
+  jpa:
+    open-in-view: false # Crucial pour les performances en SaaS
+    hibernate:
+      ddl-auto: validate # 'validate' en prod, pas 'update' pour éviter les accidents
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # Optimisation pour les batchs (importation de stocks, factures)
+        jdbc.batch_size: 25
+        order_inserts: true
+        order_updates: true

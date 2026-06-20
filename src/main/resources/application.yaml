@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: xalispain-backend
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    # Configuration spécifique à HikariCP
+    hikari:
+      pool-name: XalisPain-HikariPool
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000 # 5 minutes
+      connection-timeout: 20000 # 20 secondes
+      max-lifetime: 1200000 # 20 minutes
+      auto-commit: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
