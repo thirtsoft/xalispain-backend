@@ -1,5 +1,6 @@
 package com.wokite.net.livraison.entity;
 
+import com.wokite.net.utils.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -11,13 +12,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "xalispain_tournee")
+@Table(name = "tournee")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tournee {
-    private Long id;
+public class Tournee extends BaseEntity {
     private Long livreurId;
     private LocalDate dateTournee;
     private LocalTime heureDepart;

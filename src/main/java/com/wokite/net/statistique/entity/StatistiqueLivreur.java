@@ -1,5 +1,6 @@
 package com.wokite.net.statistique.entity;
 
+import com.wokite.net.utils.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -10,13 +11,12 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "xalispain_statistiquelivreur")
+@Table(name = "statistiquelivreur")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatistiqueLivreur {
-    private Long id;
+public class StatistiqueLivreur extends BaseEntity {
 
     private Long livreurId;
 

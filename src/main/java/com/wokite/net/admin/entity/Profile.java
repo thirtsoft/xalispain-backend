@@ -10,20 +10,25 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "xalispain_profile")
+@Table(
+        name = "profile",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"libelle", "code"})
+        }
+)
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Profile implements Serializable {
+public class Profile extends AdminEntity implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "actions_par_profil", joinColumns = @JoinColumn(name = "profil_uid"),
-            inverseJoinColumns = @JoinColumn(name = "action_uid"))
+    @JoinTable(name = "actions_par_profil", joinColumns = @JoinColumn(name = "profil_id"),
+            inverseJoinColumns = @JoinColumn(name = "action_id"))
     private Set<Action> action;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type_compte_uid", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "type_compte_id", referencedColumnName = "id", nullable = false)
     private TypeCompe typeCompte;// PROPRIETAIRE, GERANT, VENDEUR, LIVREUR, ADMINISTRATEUR
 
 }

@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "xalispain_action")
+@Table(
+        name = "action",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"libelle", "code"})
+        }
+)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +20,6 @@ import lombok.Setter;
 public class Action extends ModelEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type_compte_uid", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "type_compte_id", referencedColumnName = "id", nullable = false)
     private TypeCompe typeCompte;
 }

@@ -1,5 +1,4 @@
-package com.wokite.net.referentiel.entity;
-
+package com.wokite.net.produit.entity;
 
 import com.wokite.net.utils.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -13,23 +12,19 @@ import lombok.Setter;
 
 @Entity
 @Table(
-        name = "region",
+        name = "unite_mesure",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"libelle", "code"})
+                @UniqueConstraint(columnNames = "libelle")
         }
 )
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Region extends BaseEntity {
+public class UniteMesure extends BaseEntity {
 
-    @Column(name = "code", length = 10, unique = true)
-    private String code;
+    @Column(name = "libelle", nullable = false, length = 150)
+    private String libelle; // // PIECE, KILOGRAMME, SACHET, CARTON, BOUTEILLE, STERE
 
-    @Column(name = "libelle", nullable = false, length = 100)
-    private String libelle;
 
-    @Column(name = "pays_id", nullable = false)
-    private Long paysId;
 }

@@ -1,24 +1,31 @@
 package com.wokite.net.admin.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "xalispain_sessionUtilisateur")
+@Table(name = "session_utilisateur")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SessionUtilisateur extends AdminEntity {
 
-    private Long utilisateurId;
-    private LocalDate dateConnexion;
-    private LocalDate dateExpiration;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "utilisateur_id", referencedColumnName = "id", nullable = false)
+    private Utilisateur utilisateur;
+
+    @Column(name = "date_connexion")
+    private LocalDateTime dateConnexion;
+
+    @Column(name = "date_expiration")
+    private LocalDateTime dateExpiration;
+
+    @Column(name = "adresse_ip", length = 90)
     private String adresseIp;
 }

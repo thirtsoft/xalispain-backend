@@ -1,5 +1,6 @@
 package com.wokite.net.statistique.entity;
 
+import com.wokite.net.utils.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -11,14 +12,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "xalispain_statistiquejournaliere")
+@Table(name = "statistiquejournaliere")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatistiqueJournaliere {
-
-    private Long id;
+public class StatistiqueJournaliere extends BaseEntity {
 
     private LocalDate date;
 

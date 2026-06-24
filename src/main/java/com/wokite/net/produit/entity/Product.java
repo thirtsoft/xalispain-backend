@@ -1,32 +1,52 @@
 package com.wokite.net.produit.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.wokite.net.utils.entity.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "xalispain_product")
+@Table(
+        name = "product",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "reference")
+        }
+)
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
 
-    private Long id;
+    @Column(name = "reference", nullable = false, length = 100, unique = true)
+    private String reference;
 
-    private String nom;
+    @Column(name = "libelle", nullable = false, length = 150)
+    private String libelle;  // "Baguette", "Pain Mil", "Croissant", "Farine T55", "Levure Fraîche"
 
-    private Long categoryId;
-    
+    @ManyToOne
+    @JoinColumn(name = "subcategory_id", nullable = false)
+    private SubCategory subCategory;
+
+    @Column(name = "prix_vente")
     private Double prixVente;
 
-    private String type;
-    private String unite;
-    
-    private int actif;
+    @Column(name = "prix_appro")
+    private Double prixAppro;
 
+    @ManyToOne
+    @JoinColumn(name = "unite_mesure_id", nullable = false)
+    private UniteMesure uniteMesure;
+
+    @Column(name = "duree_conservation")
+    private Double dureeConservationJours; // Pour les produits finis (ex: 1 jour pour croissant)
+
+    @Column(name = "est_perissable")
+    private Boolean estPerissable; // true pour farine, levure, croissants, etc.
+
+    @Column(name = "seuil_alerte")
+    private Integer seuilAlerte; // Pour les matières premières
 
 }

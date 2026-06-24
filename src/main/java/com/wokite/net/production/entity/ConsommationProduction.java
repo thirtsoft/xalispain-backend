@@ -1,25 +1,37 @@
 package com.wokite.net.production.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.wokite.net.produit.entity.MouvementStock;
+import com.wokite.net.utils.entity.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Table(name = "xalispain_consommationproduction")
+@Table(name = "consommationproduction")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsommationProduction {
-    private Long id;
-    private Long productionId;
-    private Long productId;
-    private String productName;
-    private Long produitApprovisionnementId;
-    private Integer quantite;
+public class ConsommationProduction extends BaseEntity {
 
-    // 5 sacs farine, 1 carton levure, 2 sacs charbon
+    @ManyToOne
+    @JoinColumn(name = "production_id", nullable = false)
+    private Production production; // La production qui consomme
+
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
+
+    @Column(name = "product_name", nullable = false, length = 150)
+    private String productName;
+
+    @Column(name = "quantite_consommee", nullable = false)
+    private Double quantiteConsommee;
+
+    @Column(name = "unite_utilisee", length = 150)
+    private String uniteUtilisee; // Pour tracer l'unité utilisée (ex: "Kg", "Sachet")
+
 }

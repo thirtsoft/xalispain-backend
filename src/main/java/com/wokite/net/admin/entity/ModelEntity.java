@@ -17,9 +17,9 @@ import java.io.Serializable;
 @SuperBuilder(toBuilder = true)
 public class ModelEntity extends AdminEntity {
 
-    @Column(length = 40)
+    @Column(name = "code", length = 40, nullable = false)
     private String code;
 
-    @Column(length = 90)
+    @Column(name = "libelle", length = 90, nullable = false)
     private String libelle;
 }
