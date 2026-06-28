@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Profile extends AdminEntity implements Serializable {
+public class Profile extends ModelEntity implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "actions_par_profil", joinColumns = @JoinColumn(name = "profil_id"),
@@ -30,5 +30,7 @@ public class Profile extends AdminEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_compte_id", referencedColumnName = "id", nullable = false)
     private TypeCompe typeCompte;// PROPRIETAIRE, GERANT, VENDEUR, LIVREUR, ADMINISTRATEUR
+
+
 
 }

@@ -1,0 +1,73 @@
+# =============================================
+# Configuration de test - Base de données H2
+# =============================================
+server:
+  port: 8096
+
+spring:
+  datasource:
+    # H2 en mémoire avec mode PostgreSQL pour compatibilité
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    show-sql: true
+    hibernate:
+      # Hibernate crée et supprime les tables automatiquement pour les tests
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        # Dialecte H2 avec mode PostgreSQL
+        dialect: org.hibernate.dialect.H2Dialect
+        # Stratégies de nommage
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        # Afficher les valeurs des paramètres dans les logs SQL
+        # type: TRACE
+
+  # Désactiver Flyway pour les tests
+  flyway:
+    enabled: false
+
+  # Configuration H2 Console (optionnel - pour déboguer)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+        trace: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  metrics:
+    export:
+      prometheus:
+        enabled: false
+
+# ===== Logging =====
+logging:
+  level:
+    # Logging pour les tests
+    org.flywaydb: OFF
+    org.springframework.jdbc: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    # Réduire le bruit des logs
+    org.hibernate.engine.transaction: WARN
+    com.zaxxer.hikari: WARN
+    org.springframework.boot.test: WARN
+    org.springframework.test: WARN

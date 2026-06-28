@@ -6,22 +6,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(
         name = "commune",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"libelle", "departement_id"})
+                @UniqueConstraint(columnNames = {"libelle", "department_id"})
         }
 )
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Commune extends BaseEntity {
 
     @Column(name = "libelle", nullable = false, length = 100)
